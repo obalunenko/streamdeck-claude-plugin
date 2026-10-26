@@ -6,7 +6,7 @@
 
 **Status**: migrated
 
-**Input**: Reverse-engineered from `docs/superpowers/specs/2026-10-22-questions-follow-terminal-design.md`, its plan, `src/ask.js`, `src/strip.js`, `pressKeys` in `src/terminal.js`, and their tests.
+**Input**: Reverse-engineered from `docs/superpowers/specs/2026-10-22-questions-follow-terminal-design.md` (removed after migration; in git history), its plan, `src/ask.js`, `src/strip.js`, `pressKeys` in `src/terminal.js`, and their tests.
 
 ## User Scenarios & Testing *(mandatory)*
 

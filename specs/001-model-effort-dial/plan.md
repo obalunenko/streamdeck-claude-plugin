@@ -2,7 +2,7 @@
 
 **Branch**: `develop` | **Date**: 2026-10-21 (built) · migrated 2026-10-26 | **Spec**: [spec.md](spec.md)
 
-**Status**: migrated. The plan as executed is `docs/superpowers/plans/2026-10-21-model-effort-dial.md`.
+**Status**: migrated. The plan as executed was `docs/superpowers/plans/2026-10-21-model-effort-dial.md` (removed after migration; in git history).
 
 ## Summary
 

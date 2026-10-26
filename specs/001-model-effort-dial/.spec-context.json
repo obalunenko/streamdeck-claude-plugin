@@ -1,0 +1,161 @@
+{
+  "workflow": "companion",
+  "specName": "Model / Effort Dial",
+  "branch": "develop",
+  "currentStep": "implement",
+  "status": "completed",
+  "history": [
+    {
+      "step": "implement",
+      "substep": null,
+      "kind": "start",
+      "by": "extension",
+      "at": "2026-10-26T12:57:40.780Z"
+    },
+    {
+      "step": "implement",
+      "substep": null,
+      "task": "T018",
+      "kind": "complete",
+      "by": "ai",
+      "at": "2026-10-26T12:58:26.214Z"
+    },
+    {
+      "step": "implement",
+      "substep": null,
+      "task": "T019",
+      "kind": "complete",
+      "by": "ai",
+      "at": "2026-10-26T12:58:26.283Z"
+    },
+    {
+      "step": "implement",
+      "substep": null,
+      "task": "T020",
+      "kind": "complete",
+      "by": "ai",
+      "at": "2026-10-26T12:59:07.971Z"
+    },
+    {
+      "step": "implement",
+      "substep": null,
+      "task": "T003",
+      "kind": "complete",
+      "by": "ai",
+      "at": "2026-10-26T13:24:06.370Z"
+    }
+  ],
+  "currentTask": null,
+  "task_summaries": {
+    "T018": {
+      "status": "DONE",
+      "did": "HTTP server moved to src/server.js (createServer); Origin, method, bad JSON, X-Claude-TTY and routing tested over a real loopback socket",
+      "files": [
+        "src/server.js",
+        "src/plugin.js",
+        "test/server.test.js"
+      ]
+    },
+    "T019": {
+      "status": "DONE",
+      "did": "tuneStrip (in src/draw.js) tested: kind label, value, project, pending colour, chosen mark, four notices, dash",
+      "files": [
+        "src/draw.js",
+        "test/draw.test.js"
+      ]
+    },
+    "T020": {
+      "status": "DONE",
+      "did": "Decided with the user: Property Inspectors stay hand-checked; a DOM test would need jsdom, a new dev dependency (Constitution V)",
+      "files": [
+        "-"
+      ]
+    },
+    "T003": {
+      "status": "DONE",
+      "did": "Measured with the user: native tabs are separate AppleScript windows; do script into a background tab keeps the selected tab in front; recorded in CLAUDE.md",
+      "files": [
+        "CLAUDE.md",
+        "specs/001-model-effort-dial/spec.md"
+      ]
+    }
+  },
+  "decisions": [
+    {
+      "decision": "pi/tune.html and pi/usage.html stay hand-checked",
+      "why": "two small plain-HTML pages; a DOM test needs jsdom",
+      "rejected": "jsdom-based PI tests"
+    },
+    {
+      "decision": "HTTP server moved from plugin.js to src/server.js (createServer with handler callbacks)",
+      "why": "the Origin, method and tty checks are security rules and needed a test over a real socket",
+      "rejected": "testing plugin.js in a child process on port 47823, which clashes with the installed plugin"
+    }
+  ],
+  "verified": [
+    {
+      "what": "node test suites",
+      "command": "npm test",
+      "source": "derived",
+      "exitCode": 0,
+      "durationSeconds": 0.4,
+      "result": "ℹ duration_ms 121.97 · npm notice run test · npm notice run node --test"
+    },
+    {
+      "what": "bundle builds",
+      "command": "npx --no-install esbuild src/plugin.js --bundle --platform=node --format=cjs --target=node20 --outfile=/dev/null --log-level=warning",
+      "source": "derived",
+      "exitCode": 0,
+      "durationSeconds": 0.3,
+      "result": "npm notice run npx · npm notice run 'esbuild' src/plugin.js --bundle --platform=node --format=cjs --target=node20 --outfile=/dev/null --log-level=warning"
+    },
+    {
+      "what": "Spec Kit checker tests",
+      "command": "python3 scripts/test_check_speckit_updates.py",
+      "source": "derived",
+      "exitCode": 0,
+      "durationSeconds": 0.1,
+      "result": "---------------------------------------------------------------------- · Ran 3 tests in 0.000s · OK"
+    },
+    {
+      "what": "same-window tab selection under do script (T003)",
+      "command": "osascript reads before / 0 s / 1 s / 3 s after a send into ttys009",
+      "result": "selected tab ttys007 stayed index 1 and frontmost; x arrived in ttys009",
+      "warnings": [
+        "first run showed one transient reordering, not repeated"
+      ]
+    },
+    {
+      "what": "task check",
+      "command": "task check",
+      "source": "derived",
+      "exitCode": 0,
+      "durationSeconds": 0.3,
+      "result": "---------------------------------------------------------------------- · Ran 3 tests in 0.000s · OK"
+    }
+  ],
+  "coverage": {
+    "FR-011": {
+      "tests": [
+        "test/server.test.js::the statusline needs a ttysNNN in X-Claude-TTY"
+      ]
+    },
+    "FR-013": {
+      "tests": [
+        "test/draw.test.js::a notice replaces the value",
+        "and no value shows a dash"
+      ]
+    },
+    "FR-009": {
+      "tests": [
+        "test/terminal.test.js::typeInto stashes a draft with Ctrl+S before the command"
+      ]
+    }
+  },
+  "step_summaries": {
+    "implement": {
+      "summary": "Gap tasks T003, T018–T020: server.js extracted and tested, tune strip tested, tab selection measured, PI tests declined"
+    }
+  },
+  "last_action": "all tasks done, 145/145 tests pass"
+}

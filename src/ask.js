@@ -3,8 +3,7 @@
 // typed into it as arrows plus the Enter `do script` adds.
 //
 // The screen facts this rests on are measured, not documented; they are listed
-// in docs/superpowers/specs/2026-10-22-questions-follow-terminal-design.md and
-// CLAUDE.md.
+// in CLAUDE.md, and the behaviour in specs/002-questions-follow-terminal.
 
 const { KEY_UP, KEY_DOWN, TerminalAccessError } = require('./terminal');
 

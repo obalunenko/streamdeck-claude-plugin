@@ -6,7 +6,7 @@
 
 **Status**: migrated
 
-**Input**: Reverse-engineered from `docs/superpowers/specs/2026-10-21-model-effort-dial-design.md`, its plan, `src/tune.js`, `src/terminal.js`, `src/claude-cli.js` and their tests.
+**Input**: Reverse-engineered from `docs/superpowers/specs/2026-10-21-model-effort-dial-design.md` (removed after migration; in git history), its plan, `src/tune.js`, `src/terminal.js`, `src/claude-cli.js` and their tests.
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -41,7 +41,7 @@ tapping its strip cycles through registered sessions. Both dials share the choic
 **Acceptance Scenarios**:
 
 1. **Given** the front tab is a session, **When** the dial is pressed, **Then** it only alerts.
-2. **Given** a chosen tab that no longer runs `claude`, **When** the view refreshes, **Then** the choice is cleared and the strip shows `no session`.
+2. **Given** a chosen tab that no longer runs `claude`, **When** the dial is turned, **Then** nothing is typed, the choice is cleared and the strip shows `no session`. Liveness is checked only when the dial is used. A session that ends with `SessionEnd` is dropped at once.
 
 ---
 
@@ -97,7 +97,7 @@ target has not changed since the first tick.
 
 ### Deck Surface
 
-- **Model / Effort (`.tune`)**: encoder with a 200×100 strip segment. The top line is `Model` / `Effort`, the middle is the value (highlighted while pending) and the bottom is the project, with a `(chosen)` suffix for a deck-chosen session. Rotate changes the value. Push or touch cycles sessions. The Property Inspector is `pi/tune.html`. The action is not in the bundled Claude profile.
+- **Model / Effort (`.tune`)**: encoder with a 200×100 strip segment. The top line is `Model` / `Effort`, the middle is the value (highlighted while pending) and the bottom is the project, with a ` · chosen` suffix for a deck-chosen session. Rotate changes the value. Push or touch cycles sessions. The Property Inspector is `pi/tune.html`. The action is not in the bundled Claude profile.
 
 ### Claude Code Integration
 
@@ -124,4 +124,4 @@ target has not changed since the first tick.
 - Terminal.app only, not iTerm2, Ghostty or tmux.
 - The user's statusline forwards its JSON to the plugin. The plugin never edits user settings.
 - `/effort` saving the level as the model default under `modelSettings` is accepted Claude Code behaviour.
-- Same-window tab selection by `do script` was **not measured** (design fact 13).
+- Same-window tab selection by `do script` (design fact 13) was measured on 2026-10-26: AppleScript lists each native tab as its own window, and a send into a background tab keeps the selected tab in front.

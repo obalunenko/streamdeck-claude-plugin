@@ -1,0 +1,116 @@
+{
+  "workflow": "companion",
+  "specName": "Questions Answered Through the Terminal",
+  "branch": "develop",
+  "currentStep": "implement",
+  "status": "completed",
+  "history": [
+    {
+      "step": "implement",
+      "substep": null,
+      "kind": "start",
+      "by": "extension",
+      "at": "2026-10-26T12:54:42.971Z"
+    },
+    {
+      "step": "implement",
+      "substep": null,
+      "task": "T015",
+      "kind": "complete",
+      "by": "ai",
+      "at": "2026-10-26T12:55:18.847Z"
+    },
+    {
+      "step": "implement",
+      "substep": null,
+      "task": "T016",
+      "kind": "complete",
+      "by": "ai",
+      "at": "2026-10-26T12:55:24.555Z"
+    },
+    {
+      "step": "implement",
+      "substep": null,
+      "task": "T017",
+      "kind": "complete",
+      "by": "ai",
+      "at": "2026-10-26T12:55:33.798Z"
+    }
+  ],
+  "currentTask": null,
+  "task_summaries": {
+    "T015": {
+      "status": "DONE",
+      "did": "Key routing for probing/terminal requests moved to terminalKey in src/deck.js; Deny→hook, Back→alert tested",
+      "files": [
+        "src/deck.js",
+        "src/plugin.js",
+        "test/deck.test.js"
+      ]
+    },
+    "T016": {
+      "status": "DONE",
+      "did": "deckQuestions moved to src/deck.js; 1–4 options per question fit, 0, 5 or missing options leave it to the terminal",
+      "files": [
+        "src/deck.js",
+        "test/deck.test.js"
+      ]
+    },
+    "T017": {
+      "status": "DONE",
+      "did": "ask.js header now points at CLAUDE.md (where the facts are) and specs/002",
+      "files": [
+        "src/ask.js"
+      ]
+    }
+  },
+  "verified": [
+    {
+      "what": "node test suites",
+      "command": "npm test",
+      "source": "derived",
+      "exitCode": 0,
+      "durationSeconds": 0.4,
+      "result": "ℹ duration_ms 83.63975 · npm notice run test · npm notice run node --test"
+    },
+    {
+      "what": "bundle builds",
+      "command": "npx --no-install esbuild src/plugin.js --bundle --platform=node --format=cjs --target=node20 --outfile=/dev/null --log-level=warning",
+      "source": "derived",
+      "exitCode": 0,
+      "durationSeconds": 0.3,
+      "result": "npm notice run npx · npm notice run 'esbuild' src/plugin.js --bundle --platform=node --format=cjs --target=node20 --outfile=/dev/null --log-level=warning"
+    }
+  ],
+  "decisions": [
+    {
+      "decision": "Pure key routing and deckQuestions moved from plugin.js to a new src/deck.js with the action UUIDs",
+      "why": "plugin.js starts the server and the WebSocket on load, so its logic cannot be required by a test",
+      "rejected": "spawning plugin.js in a child process: it binds port 47823, which clashes with the installed plugin, and calls osascript for real"
+    }
+  ],
+  "coverage": {
+    "FR-011": {
+      "tests": [
+        "test/deck.test.js::Deny answers through the hook on the probing and the terminal path"
+      ]
+    },
+    "FR-008": {
+      "tests": [
+        "test/deck.test.js::on the terminal path option keys and Allow become presses",
+        "Back alerts"
+      ]
+    },
+    "FR-013": {
+      "tests": [
+        "test/deck.test.js::deckQuestions takes sets whose questions all have one to four options"
+      ]
+    }
+  },
+  "step_summaries": {
+    "implement": {
+      "summary": "Gap tasks T015–T017: deck.js extracted and tested, ask.js header repointed"
+    }
+  },
+  "last_action": "all tasks done, 130/130 tests pass"
+}

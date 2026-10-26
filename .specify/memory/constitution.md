@@ -1,7 +1,7 @@
 <!--
 Sync Impact Report
-- Version: 1.0.0 → 1.0.1 (PATCH: commit rule names its source)
-- Previous: template → 1.0.0 (first ratification, from /speckit-brownfield-bootstrap)
+- Version: 1.0.1 → 1.0.2 (PATCH: the HTTP server lives in src/server.js)
+- Previous: 1.0.0 → 1.0.1 (commit rule names its source); template → 1.0.0 (first ratification, from /speckit-brownfield-bootstrap)
 - Principles: all seven new, each traced to CLAUDE.md or the code
 - Templates updated: spec-template.md, plan-template.md, tasks-template.md
 - Deferred: none
@@ -24,7 +24,7 @@ Code hooks over HTTP on `127.0.0.1:47823`, and to Terminal.app through
   the device. The HTTP server MUST NOT expose any endpoint that decides a
   request.
 - The server MUST reject every request carrying an `Origin` header
-  (`src/plugin.js`). Browsers always send one; hooks (`curl`) never do.
+  (`src/server.js`). Browsers always send one; hooks (`curl`) never do.
 - **Never send more than the key shows.** `Always` sends exactly the one
   suggestion it labels, never the whole `permission_suggestions` array.
 - An empty 200 releases a request without deciding it. That is the only
@@ -60,8 +60,9 @@ Code hooks over HTTP on `127.0.0.1:47823`, and to Terminal.app through
   so they run under `node --test` without a terminal, a deck or a network.
 - Each `src/<module>.js` with logic has a `test/<module>.test.js` that uses
   `node:test` and `node:assert/strict`.
-- `src/plugin.js` is the wiring point. It alone owns the WebSocket, the HTTP
-  server and the request queue. Other modules MUST NOT require `plugin.js`,
+- `src/plugin.js` is the wiring point. It alone owns the WebSocket, the
+  request queue and the HTTP server, which it starts from `src/server.js`'s
+  `createServer` with its handlers. Other modules MUST NOT require `plugin.js`,
   and they MAY require the pure leaf `src/terminal.js`.
 
 ### V. Minimal Runtime, Single Bundle
@@ -127,4 +128,4 @@ violation MUST be justified in Complexity Tracking. Amendments bump the
 version: MAJOR when a principle is removed or redefined, MINOR when one is
 added or materially expanded, PATCH for wording.
 
-**Version**: 1.0.1 | **Ratified**: 2026-10-26 | **Last Amended**: 2026-10-26
+**Version**: 1.0.2 | **Ratified**: 2026-10-26 | **Last Amended**: 2026-10-26

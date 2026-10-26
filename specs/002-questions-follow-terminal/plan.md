@@ -2,7 +2,7 @@
 
 **Branch**: `develop` | **Date**: 2026-10-22 (built) · migrated 2026-10-26 | **Spec**: [spec.md](spec.md)
 
-**Status**: migrated. The plan as executed is `docs/superpowers/plans/2026-10-22-questions-follow-terminal.md`.
+**Status**: migrated. The plan as executed was `docs/superpowers/plans/2026-10-22-questions-follow-terminal.md` (removed after migration; in git history).
 
 ## Summary
 

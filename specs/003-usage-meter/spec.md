@@ -6,7 +6,7 @@
 
 **Status**: migrated
 
-**Input**: Reverse-engineered from `docs/superpowers/specs/2026-10-22-usage-meter-design.md`, its plan, `src/usage.js`, the Usage rendering in `src/plugin.js`, and `test/usage.test.js`.
+**Input**: Reverse-engineered from `docs/superpowers/specs/2026-10-22-usage-meter-design.md` (removed after migration; in git history), its plan, `src/usage.js`, the Usage rendering in `src/plugin.js`, and `test/usage.test.js`.
 
 ## User Scenarios & Testing *(mandatory)*
 

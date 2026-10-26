@@ -8,7 +8,7 @@
 
 - [x] T001 Measure the screen states, tty of the statusline / hooks and `/model` confirmation on Claude Code 2.1.306
 - [x] T002 [P] Capture fixtures in test/fixtures/screen-*.txt and test/fixtures/claude-help.txt
-- [ ] T003 Measure same-window tab selection by `do script` (design fact 13, left unmeasured)
+- [x] T003 Measure same-window tab selection by `do script` (design fact 13, left unmeasured)
 
 ## Phase 2: Foundational
 
@@ -38,6 +38,16 @@
 ## Phase N: Polish
 
 - [x] T017 README statusline snippet; CLAUDE.md measured facts
-- [ ] T018 Test the `/statusline` endpoint in src/plugin.js: Origin rejected, a bad X-Claude-TTY ignored (plugin.js has no tests)
-- [ ] T019 Test the strip rendering of the tune action (states `no session`, `busy`, `no claude`, `no access`, `—`)
-- [ ] T020 pi/tune.html is checked only by hand. Decide whether a test is worth it
+- [x] T018 Test the `/statusline` endpoint in src/plugin.js: Origin rejected, a bad X-Claude-TTY ignored (plugin.js has no tests)
+- [x] T019 Test the strip rendering of the tune action (states `no session`, `busy`, `no claude`, `no access`, `—`)
+- [x] T020 pi/tune.html is checked only by hand. Decide whether a test is worth it
+
+## Phase 6: Convergence
+
+- [x] T021 Make the chosen-tab liveness check and US2/AC2 agree: either clear a chosen tab whose claude has exited on refresh (tabInfo in Tuner.refresh, src/tune.js), or keep the design's check-on-dial-use and narrow AC2 to "When the dial is turned" per US2/AC2 (partial)
+- [x] T022 Align the chosen-session suffix: the strip draws `· chosen` (src/draw.js tuneStrip, test/draw.test.js) while the spec's Deck Surface says `(chosen)` per spec Deck Surface (contradicts)
+
+## Phase 7: Convergence
+
+- [x] T023 Amend the constitution (PATCH) so Principle I names src/server.js as the place that rejects an `Origin` header and Principle IV says plugin.js wires the HTTP server that src/server.js creates; the server moved out of plugin.js in T018, and CLAUDE.md already lists src/server.js per Constitution I, IV (contradicts)
+- [x] T024 Test that typeInto sends Ctrl+S (`\x13`) before `/model <v>` / `/effort <v>`, e.g. by letting src/terminal.js take an injected osascript runner, in test/terminal.test.js per FR-009 (partial)

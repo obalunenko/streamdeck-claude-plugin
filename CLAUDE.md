@@ -62,7 +62,8 @@ builds raise only the fourth number, so the next release still installs over the
 ## Layout
 
 ```
-src/plugin.js                          WebSocket client, HTTP server, request queue, rendering
+src/plugin.js                          WebSocket client, request queue, wiring of the modules below
+src/server.js                          HTTP server for the hooks: Origin / method / tty checks, routing
 src/update.js                          release check on GitHub and the macOS update dialog
 src/claude-cli.js                      finds claude, reads effort levels and model aliases from --help
 src/terminal.js                        Terminal.app bridge over osascript: front tab, screen, typing
@@ -70,6 +71,8 @@ src/tune.js                            Model / Effort dial: session registry and
 src/usage.js                           Usage meter: readings, the Limits merge, thresholds, views
 src/ask.js                             question dialog on the screen, key planner, the Asker (terminal path)
 src/strip.js                           touch strip of a question: the view and the option peek
+src/deck.js                            action UUIDs, which questions fit the deck, keys on the terminal path, background-work gates
+src/draw.js                            SVG keys and strip segments (pure), incl. the dial and Usage views
 com.obalunenko.claudeperm.sdPlugin/
   manifest.json                        actions, encoder layout, bundled profile
   Claude.streamDeckProfile             Stream Deck + profile, exported from the Stream Deck app
@@ -84,7 +87,6 @@ hooks.json                             the Claude Code hooks to merge into ~/.cl
 test/                                  node --test suites; fixtures/ holds measured screens and help
 specs/NNN-feature-name/                Spec Kit spec, plan, tasks per feature (001–003 migrated)
 .specify/memory/constitution.md        project principles; plans are checked against it
-docs/superpowers/                      original designs and plans of features 001–003
 .github/workflows/ci.yml               test, package, release on tags
 ```
 
@@ -111,7 +113,10 @@ Model / Effort dial (fixtures in `test/fixtures/`):
   `modelSettings` in `~/.claude/settings.json`.
 - Terminal.app AppleScript: a tab has `tty`; `do script "<text>" in <tab>` types
   the text plus Enter into the program there, also in a background window,
-  without raising it. `history` is the screen text. `busy` is always true while
+  without raising it. Native tabs of one window are separate windows to
+  AppleScript (one tab each); `do script` into a background tab of the same
+  window leaves the selected tab selected and in front (measured 2026-10-26,
+  one transient reordering in the first of two runs, not repeated). `history` is the screen text. `busy` is always true while
   `claude` runs.
 - The screen cannot tell a streaming reply from idle; a command typed then is
   queued. Busy comes from hooks: `UserPromptSubmit` → `Stop` / `StopFailure`.

@@ -34,6 +34,6 @@
 ## Phase N: Polish
 
 - [x] T013 README section with the cache-file snippet; CLAUDE.md data-source facts
-- [ ] T014 Test the key fill / dial bar rendering in src/plugin.js (level colours, clamp, dots hidden for one metric)
-- [ ] T015 Test that a limits-only Usage action does no front-tab lookup (wantsContext gate in src/plugin.js)
-- [ ] T016 Test the cache-file read path: missing or invalid file adds nothing
+- [x] T014 Test the key fill / dial bar rendering in src/plugin.js (level colours, clamp, dots hidden for one metric)
+- [x] T015 Test that a limits-only Usage action does no front-tab lookup (wantsContext gate in src/plugin.js)
+- [x] T016 Test the cache-file read path: missing or invalid file adds nothing

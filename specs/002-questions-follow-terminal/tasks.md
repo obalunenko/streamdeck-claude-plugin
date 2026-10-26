@@ -35,6 +35,6 @@
 ## Phase N: Polish
 
 - [x] T014 CLAUDE.md measured facts; README note on Automation access
-- [ ] T015 Test the plugin.js key gating: Deny on a terminal / probing request answers through the hook, Back alerts on the terminal path
-- [ ] T016 Test `deckQuestions` (more than 4 options left to the terminal) in src/plugin.js
-- [ ] T017 Move the measured facts that ask.js cites from the docs/superpowers design into specs/002 or CLAUDE.md only (ask.js header points at the old path)
+- [x] T015 Test the plugin.js key gating: Deny on a terminal / probing request answers through the hook, Back alerts on the terminal path
+- [x] T016 Test `deckQuestions` (more than 4 options left to the terminal) in src/plugin.js
+- [x] T017 Move the measured facts that ask.js cites from the docs/superpowers design into specs/002 or CLAUDE.md only (ask.js header points at the old path)
