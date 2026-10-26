@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Model / Effort</title>
+<style>
+  html, body {
+    margin: 0;
+    background: #2d2d2d;
+    color: #d8d8d8;
+    font: 13px -apple-system, Helvetica, Arial, sans-serif;
+  }
+  body { padding: 10px 12px; }
+  .row { display: flex; align-items: flex-start; margin-bottom: 8px; }
+  .row label { flex: 0 0 72px; padding-top: 4px; color: #969696; }
+  .row .field { flex: 1; min-width: 0; }
+  select, textarea {
+    box-sizing: border-box;
+    width: 100%;
+    background: #3d3d3d;
+    color: #d8d8d8;
+    border: 1px solid #555;
+    border-radius: 3px;
+    font: inherit;
+    padding: 3px 5px;
+  }
+  textarea { height: 90px; resize: vertical; font-family: Menlo, monospace; font-size: 12px; }
+  .hint { margin-top: 4px; color: #969696; font-size: 11px; }
+  [hidden] { display: none; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <label for="kind">Changes</label>
+    <div class="field">
+      <select id="kind">
+        <option value="model">Model</option>
+        <option value="effort">Effort</option>
+      </select>
+    </div>
+  </div>
+  <div class="row" id="models-row">
+    <label for="models">Models</label>
+    <div class="field">
+      <textarea id="models" placeholder="fable&#10;opus&#10;sonnet" spellcheck="false"></textarea>
+      <div class="hint">Empty: the aliases from claude --help</div>
+      <div class="hint">Turning starts from the session's model: the item equal to its id, else the first item the id contains (opus in claude-opus-5-5). Put longer names first: claude-opus-5 before opus.</div>
+    </div>
+  </div>
+<script>
+  // Stream Deck calls this when the Property Inspector opens.
+  function connectElgatoStreamDeckSocket(port, uuid, registerEvent, info, actionInfo) {
+    var settings = { kind: 'model', models: '' };
+    try {
+      var saved = JSON.parse(actionInfo).payload.settings || {};
+      if (saved.kind === 'effort') settings.kind = 'effort';
+      if (typeof saved.models === 'string') settings.models = saved.models;
+    } catch (e) {
+      // No saved settings: keep the defaults.
+    }
+
+    var kind = document.getElementById('kind');
+    var models = document.getElementById('models');
+    var modelsRow = document.getElementById('models-row');
+
+    function show() {
+      kind.value = settings.kind;
+      models.value = settings.models;
+      modelsRow.hidden = settings.kind !== 'model';
+    }
+
+    var socket = new WebSocket('ws://127.0.0.1:' + port);
+    socket.onopen = function () {
+      socket.send(JSON.stringify({ event: registerEvent, uuid: uuid }));
+    };
+
+    function save() {
+      if (socket.readyState !== WebSocket.OPEN) return;
+      socket.send(JSON.stringify({ event: 'setSettings', context: uuid, payload: settings }));
+    }
+
+    kind.addEventListener('change', function () {
+      settings.kind = kind.value === 'effort' ? 'effort' : 'model';
+      show();
+      save();
+    });
+    models.addEventListener('input', function () {
+      settings.models = models.value;
+      save();
+    });
+
+    show();
+  }
+</script>
+</body>
+</html>

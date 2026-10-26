@@ -1,0 +1,22 @@
+{
+  "name": "streamdeck-claude-plugin",
+  "private": true,
+  "description": "Stream Deck plugin that answers Claude Code permission dialogs",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/obalunenko/streamdeck-claude-plugin.git"
+  },
+  "scripts": {
+    "build": "esbuild src/plugin.js --bundle --platform=node --format=cjs --target=node20 --outfile=com.obalunenko.claudeperm.sdPlugin/bin/plugin.js",
+    "icons": "sh scripts/icons.sh",
+    "test": "node --test",
+    "package": "npm run build && rm -f dist/*.streamDeckPlugin && mkdir -p dist && zip -r -q dist/streamdeck-claude-plugin.streamDeckPlugin com.obalunenko.claudeperm.sdPlugin -x '*/logs/*' -x '*.DS_Store'"
+  },
+  "dependencies": {
+    "ws": "8.21.3"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
+  }
+}

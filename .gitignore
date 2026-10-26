@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Build output
+com.obalunenko.claudeperm.sdPlugin/bin/
+dist/
+
+# Stream Deck writes plugin logs next to the plugin
+com.obalunenko.claudeperm.sdPlugin/logs/
+*.log
+
+# Python bytecode from the Spec Kit scripts
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store

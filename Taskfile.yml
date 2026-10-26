@@ -1,0 +1,75 @@
+version: '3'
+
+vars:
+  NPM: '{{default "npm" .NPM}}'
+  SPECKIT_INSTALL: scripts/install-speckit.sh
+  SPECKIT_UPDATE_CHECK: scripts/check-speckit-updates.py
+  SPECKIT_VERSION: '1.1.3'
+  SPECKIT_COMPANION_VERSION: '0.25.0'
+  SPECKIT_BROWNFIELD_VERSION: '1.0.0'
+  SPECKIT_BUGFIX_VERSION: '1.1.0'
+  SPECKIT_FEATURE_NUMBERING_VERSION: '1.0.0'
+
+tasks:
+  default:
+    desc: List available tasks.
+    cmds:
+      - task --list
+
+  deps:
+    desc: Install locked Node.js dependencies.
+    cmds:
+      - '{{.NPM}} ci'
+
+  test:
+    desc: Run the node --test suites.
+    cmds:
+      - '{{.NPM}} test'
+
+  build:
+    desc: Bundle the plugin into the .sdPlugin bin directory.
+    cmds:
+      - '{{.NPM}} run build'
+
+  icons:
+    desc: Render the static icons (macOS sips).
+    cmds:
+      - '{{.NPM}} run icons'
+
+  package:
+    desc: Build and package dist/streamdeck-claude-plugin.streamDeckPlugin.
+    cmds:
+      - '{{.NPM}} run package'
+
+  speckit:install:
+    desc: Install pinned Spec Kit and all project extensions.
+    env:
+      SPECKIT_VERSION: '{{.SPECKIT_VERSION}}'
+      SPECKIT_COMPANION_VERSION: '{{.SPECKIT_COMPANION_VERSION}}'
+      SPECKIT_BROWNFIELD_VERSION: '{{.SPECKIT_BROWNFIELD_VERSION}}'
+      SPECKIT_BUGFIX_VERSION: '{{.SPECKIT_BUGFIX_VERSION}}'
+      SPECKIT_FEATURE_NUMBERING_VERSION: '{{.SPECKIT_FEATURE_NUMBERING_VERSION}}'
+    cmds:
+      - '{{.SPECKIT_INSTALL}}'
+
+  speckit:update:check:
+    desc: Check for Spec Kit and extension updates without installing them.
+    env:
+      SPECKIT_VERSION: '{{.SPECKIT_VERSION}}'
+      SPECKIT_COMPANION_VERSION: '{{.SPECKIT_COMPANION_VERSION}}'
+      SPECKIT_BROWNFIELD_VERSION: '{{.SPECKIT_BROWNFIELD_VERSION}}'
+      SPECKIT_BUGFIX_VERSION: '{{.SPECKIT_BUGFIX_VERSION}}'
+      SPECKIT_FEATURE_NUMBERING_VERSION: '{{.SPECKIT_FEATURE_NUMBERING_VERSION}}'
+    cmds:
+      - '{{.SPECKIT_UPDATE_CHECK}}'
+
+  speckit:update:test:
+    desc: Run the network-free Spec Kit update-checker regression tests.
+    cmds:
+      - python3 scripts/test_check_speckit_updates.py
+
+  check:
+    desc: Run the main local quality gates.
+    cmds:
+      - task: test
+      - task: speckit:update:test

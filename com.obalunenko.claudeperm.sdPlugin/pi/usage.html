@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Usage</title>
+<style>
+  html, body {
+    margin: 0;
+    background: #2d2d2d;
+    color: #d8d8d8;
+    font: 13px -apple-system, Helvetica, Arial, sans-serif;
+  }
+  body { padding: 10px 12px; }
+  .row { display: flex; align-items: flex-start; margin-bottom: 8px; }
+  .row > label { flex: 0 0 72px; padding-top: 4px; color: #969696; }
+  .row .field { flex: 1; min-width: 0; }
+  .check { display: block; padding: 3px 0; }
+  .check input { margin: 0 6px 0 0; vertical-align: -2px; }
+  .hint { margin-top: 4px; color: #969696; font-size: 11px; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <label>Shows</label>
+    <div class="field" id="metrics">
+      <label class="check"><input type="checkbox" value="context">Context</label>
+      <label class="check"><input type="checkbox" value="five_hour">5h</label>
+      <label class="check"><input type="checkbox" value="seven_day">7d</label>
+      <label class="check"><input type="checkbox" value="scoped">Fable 7d</label>
+      <div class="hint">With more than one: turn, press or tap to switch.</div>
+      <div class="hint">Fable 7d needs the statusline to write ~/.claude/cache/oauth-usage.json (see README).</div>
+    </div>
+  </div>
+<script>
+  // Stream Deck calls this when the Property Inspector opens.
+  function connectElgatoStreamDeckSocket(port, uuid, registerEvent, info, actionInfo) {
+    var METRICS = ['context', 'five_hour', 'seven_day', 'scoped'];
+    var settings = {};
+    try {
+      settings = JSON.parse(actionInfo).payload.settings || {};
+    } catch (e) {
+      // No saved settings: keep the defaults.
+    }
+
+    var boxes = Array.prototype.slice.call(document.querySelectorAll('#metrics input'));
+
+    // The picked metrics in fixed order; all of them when none are.
+    function picked() {
+      var list = Array.isArray(settings.metrics) ? settings.metrics : [];
+      var known = METRICS.filter(function (m) { return list.indexOf(m) !== -1; });
+      return known.length ? known : METRICS.slice();
+    }
+
+    function show() {
+      var p = picked();
+      boxes.forEach(function (box) { box.checked = p.indexOf(box.value) !== -1; });
+    }
+
+    var socket = new WebSocket('ws://127.0.0.1:' + port);
+    socket.onopen = function () {
+      socket.send(JSON.stringify({ event: registerEvent, uuid: uuid }));
+    };
+    // The plugin saves the shown metric into the same settings; keep it.
+    socket.onmessage = function (e) {
+      var msg = JSON.parse(e.data);
+      if (msg.event === 'didReceiveSettings') {
+        settings = (msg.payload && msg.payload.settings) || {};
+        show();
+      }
+    };
+
+    function save() {
+      if (socket.readyState !== WebSocket.OPEN) return;
+      socket.send(JSON.stringify({ event: 'setSettings', context: uuid, payload: settings }));
+    }
+
+    boxes.forEach(function (box) {
+      box.addEventListener('change', function () {
+        var p = boxes.filter(function (b) { return b.checked; }).map(function (b) { return b.value; });
+        // The last checked box stays checked.
+        if (!p.length) {
+          box.checked = true;
+          return;
+        }
+        settings.metrics = p;
+        save();
+      });
+    });
+
+    show();
+  }
+</script>
+</body>
+</html>

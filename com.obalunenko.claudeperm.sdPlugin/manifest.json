@@ -1,0 +1,215 @@
+{
+  "UUID": "com.obalunenko.claudeperm",
+  "Name": "Claude Permissions",
+  "Version": "1.0.0.0",
+  "Author": "obalunenko",
+  "Description": "Answer Claude Code permission dialogs from Stream Deck",
+  "Category": "Claude Code",
+  "CategoryIcon": "imgs/category",
+  "Icon": "imgs/plugin",
+  "CodePath": "bin/plugin.js",
+  "SDKVersion": 2,
+  "Software": {
+    "MinimumVersion": "6.5"
+  },
+  "OS": [
+    {
+      "Platform": "mac",
+      "MinimumVersion": "12"
+    }
+  ],
+  "Nodejs": {
+    "Version": "20"
+  },
+  "Actions": [
+    {
+      "UUID": "com.obalunenko.claudeperm.status",
+      "Name": "Pending request",
+      "Tooltip": "Shows the pending permission request; press to switch to the next one",
+      "Icon": "imgs/status",
+      "Controllers": [
+        "Keypad"
+      ],
+      "States": [
+        {
+          "Image": "imgs/status"
+        }
+      ]
+    },
+    {
+      "UUID": "com.obalunenko.claudeperm.allow",
+      "Name": "Allow",
+      "Tooltip": "Allow the pending request once",
+      "Icon": "imgs/allow",
+      "Controllers": [
+        "Keypad"
+      ],
+      "States": [
+        {
+          "Image": "imgs/allow"
+        }
+      ]
+    },
+    {
+      "UUID": "com.obalunenko.claudeperm.always",
+      "Name": "Always allow",
+      "Tooltip": "Allow and apply the dialog's suggested rule or mode",
+      "Icon": "imgs/always",
+      "Controllers": [
+        "Keypad"
+      ],
+      "States": [
+        {
+          "Image": "imgs/always"
+        }
+      ]
+    },
+    {
+      "UUID": "com.obalunenko.claudeperm.deny",
+      "Name": "Deny",
+      "Tooltip": "Deny the pending request and stop Claude",
+      "Icon": "imgs/deny",
+      "Controllers": [
+        "Keypad"
+      ],
+      "States": [
+        {
+          "Image": "imgs/deny"
+        }
+      ]
+    },
+    {
+      "UUID": "com.obalunenko.claudeperm.option1",
+      "Name": "Option 1",
+      "Tooltip": "Answer Claude's question with option 1",
+      "Icon": "imgs/option1",
+      "Controllers": [
+        "Keypad"
+      ],
+      "States": [
+        {
+          "Image": "imgs/option1"
+        }
+      ]
+    },
+    {
+      "UUID": "com.obalunenko.claudeperm.option2",
+      "Name": "Option 2",
+      "Tooltip": "Answer Claude's question with option 2",
+      "Icon": "imgs/option2",
+      "Controllers": [
+        "Keypad"
+      ],
+      "States": [
+        {
+          "Image": "imgs/option2"
+        }
+      ]
+    },
+    {
+      "UUID": "com.obalunenko.claudeperm.option3",
+      "Name": "Option 3",
+      "Tooltip": "Answer Claude's question with option 3",
+      "Icon": "imgs/option3",
+      "Controllers": [
+        "Keypad"
+      ],
+      "States": [
+        {
+          "Image": "imgs/option3"
+        }
+      ]
+    },
+    {
+      "UUID": "com.obalunenko.claudeperm.option4",
+      "Name": "Option 4",
+      "Tooltip": "Answer Claude's question with option 4",
+      "Icon": "imgs/option4",
+      "Controllers": [
+        "Keypad"
+      ],
+      "States": [
+        {
+          "Image": "imgs/option4"
+        }
+      ]
+    },
+    {
+      "UUID": "com.obalunenko.claudeperm.strip",
+      "Name": "Strip",
+      "Tooltip": "Shows the request detail or the question; press, tap or turn right to see the description of the option above",
+      "Icon": "imgs/strip",
+      "Controllers": [
+        "Encoder"
+      ],
+      "Encoder": {
+        "layout": "$A0",
+        "TriggerDescription": {
+          "Push": "Show option",
+          "Touch": "Show option",
+          "Rotate": "Show / hide option"
+        }
+      },
+      "States": [
+        {
+          "Image": "imgs/strip"
+        }
+      ]
+    },
+    {
+      "UUID": "com.obalunenko.claudeperm.tune",
+      "Name": "Model / Effort",
+      "Tooltip": "Turn to change the model or the effort of the Claude session in the front Terminal tab",
+      "Icon": "imgs/tune",
+      "PropertyInspectorPath": "pi/tune.html",
+      "Controllers": [
+        "Encoder"
+      ],
+      "Encoder": {
+        "layout": "$A0",
+        "TriggerDescription": {
+          "Rotate": "Change value",
+          "Push": "Next session",
+          "Touch": "Next session"
+        }
+      },
+      "States": [
+        {
+          "Image": "imgs/tune"
+        }
+      ]
+    },
+    {
+      "UUID": "com.obalunenko.claudeperm.usage",
+      "Name": "Usage",
+      "Tooltip": "Shows the context fill or a plan limit as a green / yellow / red scale",
+      "Icon": "imgs/usage",
+      "PropertyInspectorPath": "pi/usage.html",
+      "Controllers": [
+        "Keypad",
+        "Encoder"
+      ],
+      "Encoder": {
+        "layout": "$A0",
+        "TriggerDescription": {
+          "Rotate": "Next metric",
+          "Push": "Next metric",
+          "Touch": "Next metric"
+        }
+      },
+      "States": [
+        {
+          "Image": "imgs/usage"
+        }
+      ]
+    }
+  ],
+  "Profiles": [
+    {
+      "Name": "Claude",
+      "DeviceType": 7,
+      "ReadOnly": false,
+      "DontAutoSwitchWhenInstalled": true
+    }
+  ]
+}

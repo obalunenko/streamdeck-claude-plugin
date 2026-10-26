@@ -1,0 +1,20 @@
+✻ Cooked for 1s · done 7:47 PM
+
+❯ Call the AskUserQuestion tool exactly once with one question and nothing else, then stop. Header "Color", question "Which color for the probe?", single-select,    
+  options: "Red" (desc "warm"), "Green" (desc "calm"), "Blue" (desc "cool").                                                                                         
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ ☐ Color 
+
+Which color for the probe?
+
+❯ 1. Red
+     warm
+  2. Green
+     calm
+  3. Blue
+     cool
+  4. Type something.
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  5. Chat about this
+
+Enter to select · ↑/↓ to navigate · Esc to cancel                                                                                                  
