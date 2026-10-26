@@ -1,5 +1,8 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const os = require('node:os');
+const path = require('node:path');
 
 const {
   METRICS,
@@ -7,6 +10,7 @@ const {
   countdown,
   readingsFromStatus,
   readingsFromCache,
+  readCache,
   Limits,
   parseMetrics,
   shownMetric,
@@ -208,4 +212,15 @@ test('usageView shows the countdown and the scoped label for limits', () => {
   assert.deepEqual(usageView('five_hour', { limits, session: null, now: T }), { label: '5h', pct: 78, level: 'yellow', sub: '↻ 1h12m' });
   assert.deepEqual(usageView('seven_day', { limits, session: null, now: T }), { label: '7d', pct: 0, level: 'green', sub: '' });
   assert.deepEqual(usageView('scoped', { limits, session: null, now: T }), { label: 'Fable 7d', pct: 91, level: 'red', sub: '↻ 2d 3h' });
+});
+
+test('readCache reads the file and adds nothing when it is missing or broken', async (t) => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'usage-'));
+  t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
+  const file = path.join(dir, 'oauth-usage.json');
+  assert.deepEqual(await readCache(file), {});
+  fs.writeFileSync(file, '{not json');
+  assert.deepEqual(await readCache(file), {});
+  fs.writeFileSync(file, JSON.stringify({ five_hour: { utilization: 42, resets_at: '2026-10-22T01:10:00Z' } }));
+  assert.deepEqual(await readCache(file), { five_hour: { pct: 42, resetsAt: T } });
 });

@@ -7,6 +7,8 @@
 // limits, and an idle session's copy can be old, so `Limits` merges readings
 // per limit instead of keeping the last one.
 
+const fs = require('node:fs');
+
 const METRICS = ['context', 'five_hour', 'seven_day', 'scoped'];
 
 // Two resets this close are the same window: the API and the statusline
@@ -84,6 +86,15 @@ function readingsFromCache(json) {
     ['seven_day', of(json.seven_day)],
     ['scoped', scoped],
   ]);
+}
+
+// The cache file is only read; a missing or broken file adds nothing.
+async function readCache(file) {
+  try {
+    return readingsFromCache(JSON.parse(await fs.promises.readFile(file, 'utf8')));
+  } catch {
+    return {};
+  }
 }
 
 // One merged value per limit. A later window replaces the held one; within a
@@ -176,6 +187,7 @@ module.exports = {
   countdown,
   readingsFromStatus,
   readingsFromCache,
+  readCache,
   Limits,
   parseMetrics,
   shownMetric,
