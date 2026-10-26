@@ -1,0 +1,24 @@
+
+
+❯ Call the AskUserQuestion tool exactly once with these two questions and nothing else, then stop. Q1 header "Tools", question "Which tools for the probe?",         
+  multiSelect true, options: "Hammer" (desc "h"), "Saw" (desc "s"), "Drill" (desc "d"), "Tape" (desc "t"). Q2 header "Size", question "Which size for the probe?",   
+  single-select, options: "Small" (desc "S"), "Large" (desc "L").                                                                                                    
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+←  ☐ Tools  ☐ Size  ✔ Submit  →
+
+Which tools for the probe?
+
+❯ 1. [ ] Hammer
+         h
+  2. [ ] Saw
+         s
+  3. [ ] Drill
+         d
+  4. [ ] Tape
+         t
+  5. [ ] Type something
+     Next
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  6. Chat about this
+
+Enter to select · Tab/Arrow keys to navigate · Esc to cancel

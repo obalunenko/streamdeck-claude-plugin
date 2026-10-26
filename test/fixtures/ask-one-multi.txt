@@ -1,0 +1,18 @@
+  true, options: "Chips" (desc "salty"), "Nuts" (desc "crunchy"), "Fruit" (desc "fresh").                                                                            
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+←  ☐ Snacks  ✔ Submit  →
+
+Which snacks for the probe?
+
+❯ 1. [ ] Chips
+         salty
+  2. [ ] Nuts
+         crunchy
+  3. [ ] Fruit
+         fresh                                                                                                                                     
+  4. [ ] Type something
+     Submit
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  5. Chat about this
+
+Enter to select · ↑/↓ to navigate · Esc to cancel

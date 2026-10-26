@@ -1,0 +1,1 @@
+../../../.specify/extensions/feature-numbering/.specify-dev/agent-commands/claude/speckit-feature-numbering-before-specify/SKILL.md

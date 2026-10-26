@@ -1,0 +1,22 @@
+
+❯ Call the AskUserQuestion tool exactly once with these three questions and nothing else, then stop. Q1 header "Color", question "Which color for the probe?",       
+  single-select, options: "Red" (desc "warm"), "Green" (desc "calm"), "Blue" (desc "cool"). Q2 header "Snacks", question "Which snacks for the probe?", multiSelect  
+  true, options: "Chips" (desc "salty"), "Nuts" (desc "crunchy"), "Fruit" (desc "fresh"). Q3 header "Size", question "Which size for the probe?", single-select,     
+  options: "Small" (desc "S"), "Large" (desc "L").                                                                                                                   
+
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+←  ☒ Color  ☒ Snacks  ☒ Size  ✔ Submit  →
+
+Review your answers
+
+ ● Which color for the probe?
+   → Red
+ ● Which snacks for the probe?
+   → Chips
+ ● Which size for the probe?
+   → Large
+     
+Ready to submit your answers?
+  
+❯ 1. Submit answers
+  2. Cancel

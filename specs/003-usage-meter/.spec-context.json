@@ -1,0 +1,131 @@
+{
+  "workflow": "companion",
+  "specName": "Usage Meter",
+  "branch": "develop",
+  "currentStep": "implement",
+  "status": "completed",
+  "history": [
+    {
+      "step": "implement",
+      "substep": null,
+      "kind": "start",
+      "by": "extension",
+      "at": "2026-10-26T12:55:51.255Z"
+    },
+    {
+      "step": "implement",
+      "substep": null,
+      "task": "T014",
+      "kind": "complete",
+      "by": "ai",
+      "at": "2026-10-26T12:57:25.407Z"
+    },
+    {
+      "step": "implement",
+      "substep": null,
+      "task": "T015",
+      "kind": "complete",
+      "by": "ai",
+      "at": "2026-10-26T12:57:25.476Z"
+    },
+    {
+      "step": "implement",
+      "substep": null,
+      "task": "T016",
+      "kind": "complete",
+      "by": "ai",
+      "at": "2026-10-26T12:57:25.544Z"
+    }
+  ],
+  "currentTask": null,
+  "task_summaries": {
+    "T014": {
+      "status": "DONE",
+      "did": "Pure drawing moved to src/draw.js; usageKey fill/colours/dash and usageStrip bar/dots/escaping tested",
+      "files": [
+        "src/draw.js",
+        "src/plugin.js",
+        "test/draw.test.js"
+      ]
+    },
+    "T015": {
+      "status": "DONE",
+      "did": "needsFrontTab in src/deck.js: limits-only Usage never asks Terminal; tested",
+      "files": [
+        "src/deck.js",
+        "src/plugin.js",
+        "test/deck.test.js"
+      ]
+    },
+    "T016": {
+      "status": "DONE",
+      "did": "readCache in src/usage.js: missing/broken file gives {}, valid file folds; needsUsageCache gate tested",
+      "files": [
+        "src/usage.js",
+        "src/deck.js",
+        "src/plugin.js",
+        "test/usage.test.js",
+        "test/deck.test.js"
+      ]
+    }
+  },
+  "verified": [
+    {
+      "what": "node test suites",
+      "command": "npm test",
+      "source": "derived",
+      "exitCode": 0,
+      "durationSeconds": 0.2,
+      "result": "ℹ duration_ms 76.430625 · npm notice run test · npm notice run node --test"
+    },
+    {
+      "what": "bundle builds",
+      "command": "npx --no-install esbuild src/plugin.js --bundle --platform=node --format=cjs --target=node20 --outfile=/dev/null --log-level=warning",
+      "source": "derived",
+      "exitCode": 0,
+      "durationSeconds": 0.3,
+      "result": "npm notice run npx · npm notice run 'esbuild' src/plugin.js --bundle --platform=node --format=cjs --target=node20 --outfile=/dev/null --log-level=warning"
+    }
+  ],
+  "decisions": [
+    {
+      "decision": "Pure SVG drawing moved from plugin.js to src/draw.js; keyImage/stripImage stay in plugin.js because they read the request queue",
+      "why": "plugin.js cannot be required by a test",
+      "rejected": "testing rendering through a fake Stream Deck socket"
+    },
+    {
+      "decision": "readUsageCache now redraws after every read, also when the file is missing",
+      "why": "readCache returns {} instead of rejecting, so one path; the redraw is cheap",
+      "rejected": "keeping the reject path to skip the redraw"
+    }
+  ],
+  "coverage": {
+    "FR-011": {
+      "tests": [
+        "test/draw.test.js"
+      ]
+    },
+    "FR-010": {
+      "tests": [
+        "test/deck.test.js::only a dial or a Usage action showing Context needs the front tab"
+      ]
+    },
+    "FR-009": {
+      "tests": [
+        "test/usage.test.js::readCache reads the file and adds nothing when it is missing or broken",
+        "test/deck.test.js::the cache file is wanted only while a Usage action shows a limit"
+      ]
+    },
+    "FR-012": {
+      "tests": [
+        "test/draw.test.js::drawn text is escaped"
+      ]
+    }
+  },
+  "step_summaries": {
+    "implement": {
+      "summary": "Gap tasks T014–T016: draw.js extracted, Usage rendering, front-tab gate and cache read tested"
+    }
+  },
+  "last_action": "all tasks done, 137/137 tests pass"
+}
