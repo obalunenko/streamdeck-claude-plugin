@@ -76,6 +76,12 @@ test('typeInto refuses text that is not a /model or /effort command', async () =
   }
 });
 
+test('typeInto stashes a draft with Ctrl+S before the command', async () => {
+  const runs = [];
+  await typeInto('ttys001', '/effort high', async (script, argv) => (runs.push(argv), 'ok\n'));
+  assert.deepEqual(runs, [['ttys001', '\x13/effort high']]);
+});
+
 test('pressKeys refuses anything but arrow runs before touching AppleScript', async () => {
   for (const keys of ['x', '\r', '\x1b', '\x1b[C', '\x1b[D', '1', `${KEY_DOWN}\n`, `${KEY_UP}a`, '/model opus', undefined]) {
     await assert.rejects(pressKeys('ttys001', keys), /keys/, JSON.stringify(keys));

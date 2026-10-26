@@ -148,8 +148,8 @@ end run`;
 // Ctrl+S stashes a draft before a command; Claude Code brings it back after.
 const STASH = '\x13';
 
-async function doScriptIn(tty, text) {
-  const out = await osascript(DO_SCRIPT_IN, [tty, text]);
+async function doScriptIn(tty, text, run = osascript) {
+  const out = await run(DO_SCRIPT_IN, [tty, text]);
   if (!out.startsWith('ok')) throw new Error(`No Terminal tab with tty ${tty}`);
 }
 
@@ -172,11 +172,12 @@ async function tabInfo(tty) {
 
 // Types text plus Enter into the tab with that tty. The caller builds the text
 // with commandText; it is checked again here because it lands in a terminal.
-async function typeInto(tty, text) {
+// `run` stands in for osascript in tests.
+async function typeInto(tty, text, run = osascript) {
   checkTty(tty);
   const m = typeof text === 'string' ? COMMAND.exec(text) : null;
   if (!m || !SAFE_VALUE.test(m[1])) throw new Error('Refusing to type that text');
-  await doScriptIn(tty, STASH + text);
+  await doScriptIn(tty, STASH + text, run);
 }
 
 // Types a run of up / down arrows plus Enter (do script always adds it) into
