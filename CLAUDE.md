@@ -201,7 +201,8 @@ Usage meter (measured on the user's machine):
 
 ## CI / release
 
-`.github/workflows/ci.yml`: the `package` job tests and builds the plugin on
+`.github/workflows/ci.yml`: the `package` job installs the pinned Task
+(`make tools`) and runs `task deps`, `task check`, `task package` on
 every pull request, on pushes to `master` and on `v*.*.*` tags (branches run
 through their PR only, so nothing runs twice). On a tag it sets the manifest
 version from the tag, and the `release` job publishes a GitHub release with the

@@ -26,13 +26,19 @@ jobs:
           node-version: 20
           cache: npm
 
-      - run: npm ci
+      # Task is pinned as a Go tool in tools/task/go.mod; CI installs the same version.
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: tools/task/go.mod
+          cache-dependency-path: tools/task/go.sum
 
-      - name: Test
-        run: npm test
+      - name: Install Task
+        run: make tools
 
-      - name: Test the Spec Kit update checker
-        run: python3 scripts/test_check_speckit_updates.py
+      - run: task deps
+
+      - name: Check
+        run: task check
 
       # Releases are X.Y.Z.0 from the tag; local builds raise only the fourth number.
       - name: Set the manifest version from the tag
@@ -48,7 +54,7 @@ jobs:
           ' "$version"
 
       - name: Package
-        run: npm run package
+        run: task package
 
       - uses: actions/upload-artifact@v7
         with:
